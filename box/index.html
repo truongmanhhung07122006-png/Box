@@ -3,28 +3,199 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home - Web Assignment</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>Accessible Interactive Photo Gallery</title>
   </head>
-  <body>
-    <a href="#main-content" class="skip-link">Skip to Main Content</a>
+  <body onload="initializeGallery()">
+    <main>
+      <h1>Interactive Photo Gallery</h1>
 
-    <nav>
-      <ul class="nav-bar">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="gallery.html">Grid Gallery</a></li>
-        <li><a href="flex.html">Flex Gallery</a></li>
-      </ul>
-    </nav>
+      <div id="image">
+        Hover over an image below or use the Tab key to display here.
+      </div>
 
-    <main id="main-content">
-      <h1>Welcome to My Website</h1>
-      <p>This is the homepage of my multi-page web layout exercise.</p>
+      <div class="gallery">
+        <img
+          class="preview"
+          src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=500"
+          alt="Majestic Yosemite Valley Mountains"
+          onmouseover="upDate(this)"
+          onmouseleave="undo()"
+          onfocus="upDate(this)"
+          onblur="undo()"
+        />
 
-      <img
-        src="https://via.placeholder.com/600x400"
-        alt="A beautiful placeholder landscape"
-      />
+        <img
+          class="preview"
+          src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=500"
+          alt="Foggy Green Forest at Sunrise"
+          onmouseover="upDate(this)"
+          onmouseleave="undo()"
+          onfocus="upDate(this)"
+          onblur="undo()"
+        />
+
+        <img
+          class="preview"
+          src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=500"
+          alt="Wooden Bridge over a Peaceful Stream"
+          onmouseover="upDate(this)"
+          onmouseleave="undo()"
+          onfocus="upDate(this)"
+          onblur="undo()"
+        />
+
+        <img
+          class="preview"
+          src="https://images.unsplash.com/photo-1472214222541-d510753a8707?w=500"
+          alt="Lush Green Valley with a Distant River"
+          onmouseover="upDate(this)"
+          onmouseleave="undo()"
+          onfocus="upDate(this)"
+          onblur="undo()"
+        />
+
+        <img
+          class="preview"
+          src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=500"
+          alt="Rolling Green Hills under a Dramatic Sky"
+          onmouseover="upDate(this)"
+          onmouseleave="undo()"
+          onfocus="upDate(this)"
+          onblur="undo()"
+        />
+
+        <img
+          class="preview"
+          src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=500"
+          alt="Hiker standing on top of a mountain overlook"
+          onmouseover="upDate(this)"
+          onmouseleave="undo()"
+          onfocus="upDate(this)"
+          onblur="undo()"
+        />
+      </div>
     </main>
+
+    <script>
+      // Function called automatically when the page finishes loading
+      function initializeGallery() {
+        // 1. Confirm event triggers
+        console.log("initializeGallery triggered via onload!");
+
+        // 2. Select all images with the class 'preview'
+        const images = document.querySelectorAll(".preview");
+
+        // 3. Write a for loop to loop through each image and add tabindex
+        for (let i = 0; i < images.length; i++) {
+          images[i].setAttribute("tabindex", "0");
+          console.log("Added tabindex='0' to image index: " + i);
+        }
+      }
+
+      function upDate(previewPic) {
+        // Check that the event is triggering (works for both mouseover and focus!)
+        console.log("upDate event triggered by: ", previewPic.alt);
+
+        const displayBox = document.getElementById("image");
+
+        // Change text and background image
+        displayBox.innerHTML = previewPic.alt;
+        displayBox.style.backgroundImage = "url('" + previewPic.src + "')";
+      }
+
+      function undo() {
+        console.log("undo event triggered!");
+
+        const displayBox = document.getElementById("image");
+
+        // Reset background and text to originals
+        displayBox.style.backgroundImage = "url('')";
+        displayBox.innerHTML =
+          "Hover over an image below or use the Tab key to display here.";
+      }
+    </script>
+
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f4f9;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+      }
+
+      main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      #image {
+        width: 80%;
+        max-width: 600px;
+        height: 350px;
+        border: 4px solid #333;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        background-color: #555555; /* Darker grey to pass color contrast guidelines */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        color: #ffffff;
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9);
+        transition: background-image 0.2s ease-in-out;
+      }
+
+      .gallery {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+        max-width: 900px;
+        padding: 20px;
+      }
+
+      .preview {
+        width: 130px;
+        height: 90px;
+        border: 3px solid #ccc;
+        border-radius: 4px;
+        cursor: pointer;
+        object-fit: cover;
+        transition:
+          transform 0.2s,
+          border-color 0.2s;
+      }
+
+      /* Standard mouse hover */
+      .preview:hover {
+        transform: scale(1.05);
+        border-color: #333;
+      }
+
+      /* Critical for Keyboard Navigation: Style when the user Tabs onto an image */
+      .preview:focus {
+        outline: 4px solid #0056b3; /* Highly visible focus ring */
+        transform: scale(1.05);
+        border-color: #0056b3;
+      }
+    </style>
   </body>
 </html>
